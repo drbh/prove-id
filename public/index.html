@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identity — dholtz.com</title>
+  <style>
+    :root { --bg: #0d1117; --fg: #e6edf3; --muted: #8b949e; --border: #30363d; --accent: #58a6ff; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace; background: var(--bg); color: var(--fg); line-height: 1.6; padding: 2rem; max-width: 720px; margin: 0 auto; }
+    h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; }
+    h2 { font-size: 1.1rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--accent); }
+    .key-card { background: #161b22; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+    .key-card .label { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .key-card .type { font-weight: 600; margin-bottom: 0.5rem; }
+    .key-card pre { font-size: 0.75rem; word-break: break-all; white-space: pre-wrap; color: var(--muted); background: var(--bg); padding: 0.5rem; border-radius: 4px; overflow-x: auto; }
+    .fingerprint { font-family: monospace; color: var(--fg); }
+    .verify { background: #161b22; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-top: 2rem; }
+    .verify code { background: var(--bg); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem; display: block; margin: 0.5rem 0; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .accounts { list-style: none; }
+    .accounts li { padding: 0.25rem 0; }
+    .accounts li::before { content: "→ "; color: var(--muted); }
+    footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <h1>drbh</h1>
+  <p class="subtitle">Public identity and key verification for dholtz.com</p>
+
+  <h2>SSH Signing Keys</h2>
+  <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem;">These keys are hardware-bound and biometric-gated. They cannot be exported or copied.</p>
+
+  <div class="key-card">
+    <div class="label">Key 1 — Secure Enclave (ECDSA P-256)</div>
+    <div class="type">ecdsa-sha2-nistp256</div>
+    <pre>ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAae2QDHOtHBA5KzurIiaWx5k944Y2t04kiTNmVxotQ3Kc2P+ivMV2ZWPIr0bPzULZ8WokGtklle7B5vugSi3tg=</pre>
+  </div>
+
+  <div class="key-card">
+    <div class="label">Key 2 — FIDO2 Security Key (Ed25519-SK)</div>
+    <div class="type">sk-ssh-ed25519@openssh.com</div>
+    <pre>sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIONcdk+g4kfW4Jrw1sAUec3Ldib2spma28kde/z823UrAAAACnNzaDpnaXRodWI=</pre>
+  </div>
+
+  <h2>Linked Accounts</h2>
+  <ul class="accounts">
+    <li><a href="https://github.com/drbh">github.com/drbh</a> — keys match <a href="https://github.com/drbh.keys">github.com/drbh.keys</a></li>
+    <li><a href="https://dholtz.com">dholtz.com</a> — this domain (DNS TXT verified)</li>
+  </ul>
+
+  <h2>Verify via DNS</h2>
+  <div class="verify">
+    <p>No special tools needed. Run:</p>
+    <code>dig TXT _keys.dholtz.com</code>
+    <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted);">Compare the fingerprints returned with the keys above. DNSSEC protects these records from tampering.</p>
+  </div>
+
+  <h2>Verify a Git Commit</h2>
+  <div class="verify">
+    <p>To verify commits signed by these keys:</p>
+    <code>curl -s https://dholtz.com/.well-known/ssh-keys >> ~/.ssh/allowed_signers</code>
+    <code>git log --show-signature</code>
+  </div>
+
+  <footer>
+    Keys are also available at <a href="/.well-known/ssh-keys">/.well-known/ssh-keys</a>
+  </footer>
+</body>
+</html>
