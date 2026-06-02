@@ -3,204 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Identity — dholtz.com</title>
+  <title>drbh @ dholtz.com</title>
 </head>
-<body bgcolor="#FFFFFF" text="#000000" link="#0000EE" vlink="#551A8B">
+<body>
 
-<h1>drbh @ dholtz.com</h1>
-<p><i>Public identity and key verification</i></p>
-<hr noshade>
+<img src="/profile.jpg" width="120" height="120" style="border-radius:50%"><br>
+<h2>drbh @ dholtz.com</h2>
+<p>Public keys for identity verification. Hardware-bound, biometric-gated.</p>
 
-<h2>SSH Signing Keys</h2>
-<p>These keys are hardware-bound and biometric-gated. They cannot be exported or copied.</p>
+<p><b>Secure Enclave (ECDSA P-256)</b><br>
+<tt style="font-size:small;word-break:break-all">ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAae2QDHOtHBA5KzurIiaWx5k944Y2t04kiTNmVxotQ3Kc2P+ivMV2ZWPIr0bPzULZ8WokGtklle7B5vugSi3tg=</tt><br>
+<small>SHA256:v5IsB6w/G1qvgP0OWRF/mIWTUniia2BE4LjR5s4s41M</small></p>
 
-<h3>Key 1 &mdash; Secure Enclave (ECDSA P-256)</h3>
-<blockquote>
-  <b>Type:</b> ecdsa-sha2-nistp256<br>
-  <b>Fingerprint:</b> <tt>SHA256:v5IsB6w/G1qvgP0OWRF/mIWTUniia2BE4LjR5s4s41M</tt>
-  <pre>ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAae2QDHOtHBA5KzurIiaWx5k944Y2t04kiTNmVxotQ3Kc2P+ivMV2ZWPIr0bPzULZ8WokGtklle7B5vugSi3tg=</pre>
-</blockquote>
-
-<h3>Key 2 &mdash; FIDO2 Security Key (Ed25519-SK)</h3>
-<blockquote>
-  <b>Type:</b> sk-ssh-ed25519@openssh.com<br>
-  <b>Fingerprint:</b> <tt>SHA256:SssKB0HNArrpghRdv3P5OLc2yELgM8vEJcBK4mPgZiE</tt>
-  <pre>sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIONcdk+g4kfW4Jrw1sAUec3Ldib2spma28kde/z823UrAAAACnNzaDpnaXRodWI=</pre>
-</blockquote>
+<p><b>FIDO2 Security Key (Ed25519-SK)</b><br>
+<tt style="font-size:small;word-break:break-all">sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIONcdk+g4kfW4Jrw1sAUec3Ldib2spma28kde/z823UrAAAACnNzaDpnaXRodWI=</tt><br>
+<small>SHA256:SssKB0HNArrpghRdv3P5OLc2yELgM8vEJcBK4mPgZiE</small></p>
 
 <hr noshade>
 
-<h2>Linked Accounts</h2>
-<ul>
-  <li><a href="https://github.com/drbh">github.com/drbh</a> &mdash; keys match <a href="https://github.com/drbh.keys">github.com/drbh.keys</a></li>
-  <li><a href="https://dholtz.com">dholtz.com</a> &mdash; this domain</li>
-</ul>
+<p><b>Accounts</b><br>
+<a href="https://github.com/drbh">github.com/drbh</a><br>
+<a href="mailto:david.richard.holtz@gmail.com">david.richard.holtz@gmail.com</a></p>
 
 <hr noshade>
 
-<h2>Verify a Git Commit</h2>
-<p>Add these keys as trusted signers, then verify:</p>
-<pre>echo "drbh@dholtz.com $(curl -s https://dholtz.com/.well-known/ssh-keys | head -1)" >> ~/.ssh/allowed_signers
-echo "drbh@dholtz.com $(curl -s https://dholtz.com/.well-known/ssh-keys | tail -1)" >> ~/.ssh/allowed_signers
-git config gpg.ssh.allowedSignersFile ~/.ssh/allowed_signers
-git log --show-signature</pre>
-
-<hr noshade>
-
-<h2>Check a Signed Message</h2>
-<p>Paste an SSH-signed message below to check if it was signed by one of the keys above.</p>
-
-<table border="1" cellpadding="8" cellspacing="0" bgcolor="#F5F5F5">
-<tr><td>
-  <b>Signed message:</b><br>
-  <textarea id="sig-input" rows="12" cols="72" wrap="off" placeholder="-----BEGIN SSH SIGNATURE-----
+<p><b>Check a signed message</b></p>
+<textarea id="sig-input" rows="10" cols="72" wrap="off" placeholder="-----BEGIN SSH SIGNATURE-----
 ...
------END SSH SIGNATURE-----"></textarea>
-  <br><br>
-  <input type="button" value="Check Signature" onclick="checkSig()">
-  <input type="button" value="Clear" onclick="clearSig()">
-  <br><br>
-  <b>Result:</b><br>
-  <pre id="sig-result">(paste a signature above and click Check)</pre>
-</td></tr>
-</table>
-
-<p><font size="2"><b>Note:</b> This performs a key-match check in the browser (extracts the public key
-from the signature and compares it to the known keys above). For full cryptographic
-verification of the message content, use <tt>ssh-keygen -Y verify</tt> locally.</font></p>
+-----END SSH SIGNATURE-----"></textarea><br>
+<input type="button" value="Check" onclick="checkSig()">
+<input type="button" value="Clear" onclick="clearSig()">
+<pre id="sig-result"></pre>
 
 <hr noshade>
 
-<p><font size="2">
-  Raw keys: <a href="/.well-known/ssh-keys">/.well-known/ssh-keys</a>
-  &nbsp;|&nbsp; drbh &nbsp;|&nbsp; Last updated June 2026
-</font></p>
+<p><small>
+  <a href="https://github.com/drbh">github</a> &middot;
+  <a href="/.well-known/ssh-keys">raw keys</a>
+</small></p>
 
 <script>
 var KNOWN_KEYS = [
-  {
-    label: "Key 1 - Secure Enclave (ECDSA P-256)",
-    type: "ecdsa-sha2-nistp256",
-    b64: "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAae2QDHOtHBA5KzurIiaWx5k944Y2t04kiTNmVxotQ3Kc2P+ivMV2ZWPIr0bPzULZ8WokGtklle7B5vugSi3tg=",
-    fingerprint: "SHA256:v5IsB6w/G1qvgP0OWRF/mIWTUniia2BE4LjR5s4s41M"
-  },
-  {
-    label: "Key 2 - FIDO2 Security Key (Ed25519-SK)",
-    type: "sk-ssh-ed25519@openssh.com",
-    b64: "AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIONcdk+g4kfW4Jrw1sAUec3Ldib2spma28kde/z823UrAAAACnNzaDpnaXRodWI=",
-    fingerprint: "SHA256:SssKB0HNArrpghRdv3P5OLc2yELgM8vEJcBK4mPgZiE"
-  }
+  { label: "Secure Enclave (ECDSA P-256)", b64: "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAae2QDHOtHBA5KzurIiaWx5k944Y2t04kiTNmVxotQ3Kc2P+ivMV2ZWPIr0bPzULZ8WokGtklle7B5vugSi3tg=", fingerprint: "SHA256:v5IsB6w/G1qvgP0OWRF/mIWTUniia2BE4LjR5s4s41M" },
+  { label: "FIDO2 Security Key (Ed25519-SK)", b64: "AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIONcdk+g4kfW4Jrw1sAUec3Ldib2spma28kde/z823UrAAAACnNzaDpnaXRodWI=", fingerprint: "SHA256:SssKB0HNArrpghRdv3P5OLc2yELgM8vEJcBK4mPgZiE" }
 ];
 
 function b64ToBytes(b64) {
-  var bin = atob(b64);
-  var bytes = new Uint8Array(bin.length);
+  var bin = atob(b64), bytes = new Uint8Array(bin.length);
   for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   return bytes;
 }
 
-function bytesToHex(bytes) {
-  return Array.from(bytes).map(function(b) { return b.toString(16).padStart(2, "0"); }).join("");
+function readU32(buf, o) { return (buf[o]<<24|buf[o+1]<<16|buf[o+2]<<8|buf[o+3])>>>0; }
+function readString(buf, o) { var l=readU32(buf,o); return {data:buf.slice(o+4,o+4+l),next:o+4+l}; }
+
+function extractPubkey(sigB64) {
+  var buf = b64ToBytes(sigB64), o = 6; // skip "SSHSIG"
+  o += 4; // skip version
+  var pk = readString(buf, o);
+  return btoa(String.fromCharCode.apply(null, pk.data));
 }
 
-function readU32(buf, offset) {
-  return (buf[offset] << 24 | buf[offset+1] << 16 | buf[offset+2] << 8 | buf[offset+3]) >>> 0;
-}
-
-function readString(buf, offset) {
-  var len = readU32(buf, offset);
-  return { data: buf.slice(offset + 4, offset + 4 + len), next: offset + 4 + len };
-}
-
-function extractPubkeyFromSig(sigB64) {
-  // SSH signature format: MAGIC_PREAMBLE || version(u32) || publickey(string) || ...
-  var buf = b64ToBytes(sigB64);
-  var magic = "SSHSIG";
-  var offset = 0;
-  // check magic
-  var preamble = "";
-  for (var i = 0; i < 6; i++) preamble += String.fromCharCode(buf[i]);
-  if (preamble !== magic) return null;
-  offset = 6;
-  // version (u32)
-  var version = readU32(buf, offset);
-  offset += 4;
-  // publickey (string)
-  var pk = readString(buf, offset);
-  // pk.data is the serialized public key
-  // convert to base64 for comparison
-  var pkB64 = btoa(String.fromCharCode.apply(null, pk.data));
-  return pkB64;
-}
-
-async function sha256B64(bytes) {
-  var hash = await crypto.subtle.digest("SHA-256", bytes);
-  var b64 = btoa(String.fromCharCode.apply(null, new Uint8Array(hash)));
-  // SSH fingerprint format: no padding, standard base64
-  return "SHA256:" + b64.replace(/=+$/, "");
+async function sha256fp(bytes) {
+  var h = await crypto.subtle.digest("SHA-256", bytes);
+  return "SHA256:" + btoa(String.fromCharCode.apply(null, new Uint8Array(h))).replace(/=+$/,"");
 }
 
 async function checkSig() {
-  var result = document.getElementById("sig-result");
-  var input = document.getElementById("sig-input").value.trim();
-
-  if (!input) {
-    result.textContent = "ERROR: No input provided.";
-    return;
-  }
-
-  // Extract base64 between BEGIN/END markers
-  var match = input.match(/-----BEGIN SSH SIGNATURE-----\s*([\s\S]*?)\s*-----END SSH SIGNATURE-----/);
-  if (!match) {
-    result.textContent = "ERROR: Could not find SSH signature block.\nExpected format:\n-----BEGIN SSH SIGNATURE-----\n...\n-----END SSH SIGNATURE-----";
-    return;
-  }
-
-  var sigB64 = match[1].replace(/\s+/g, "");
-  var pkB64;
+  var r = document.getElementById("sig-result"), input = document.getElementById("sig-input").value.trim();
+  if (!input) { r.textContent = "No input."; return; }
+  var m = input.match(/-----BEGIN SSH SIGNATURE-----\s*([\s\S]*?)\s*-----END SSH SIGNATURE-----/);
+  if (!m) { r.textContent = "No SSH signature block found."; return; }
   try {
-    pkB64 = extractPubkeyFromSig(sigB64);
-  } catch(e) {
-    result.textContent = "ERROR: Could not parse signature: " + e.message;
-    return;
-  }
-
-  if (!pkB64) {
-    result.textContent = "ERROR: Could not extract public key from signature.";
-    return;
-  }
-
-  // compute fingerprint of extracted key
-  var pkBytes = b64ToBytes(pkB64);
-  var fp = await sha256B64(pkBytes);
-
-  // compare against known keys
-  var matched = null;
-  for (var i = 0; i < KNOWN_KEYS.length; i++) {
-    if (KNOWN_KEYS[i].b64 === pkB64 || KNOWN_KEYS[i].fingerprint === fp) {
-      matched = KNOWN_KEYS[i];
-      break;
-    }
-  }
-
-  if (matched) {
-    result.textContent = "MATCH: Signed by a known key.\n\n"
-      + "  Key:         " + matched.label + "\n"
-      + "  Type:        " + matched.type + "\n"
-      + "  Fingerprint: " + matched.fingerprint + "\n\n"
-      + "This signature was made by a key belonging to drbh@dholtz.com.\n"
-      + "For full message verification, run:\n"
-      + "  ssh-keygen -Y verify -f allowed_signers -I drbh@dholtz.com -n <namespace> -s signature_file < message";
-  } else {
-    result.textContent = "NO MATCH: The signing key is NOT in the known set.\n\n"
-      + "  Extracted fingerprint: " + fp + "\n\n"
-      + "This signature was NOT made by any key listed on this page.";
-  }
+    var pkB64 = extractPubkey(m[1].replace(/\s+/g,"")), fp = await sha256fp(b64ToBytes(pkB64));
+    var match = KNOWN_KEYS.find(function(k){ return k.b64===pkB64||k.fingerprint===fp; });
+    r.textContent = match
+      ? "MATCH: " + match.label + "\n" + match.fingerprint
+      : "NO MATCH\nExtracted: " + fp;
+  } catch(e) { r.textContent = "Could not parse signature."; }
 }
 
 function clearSig() {
   document.getElementById("sig-input").value = "";
-  document.getElementById("sig-result").textContent = "(paste a signature above and click Check)";
+  document.getElementById("sig-result").textContent = "";
 }
 </script>
 
